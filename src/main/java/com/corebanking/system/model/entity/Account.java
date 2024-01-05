@@ -2,6 +2,7 @@ package com.corebanking.system.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity
@@ -27,6 +28,7 @@ public class Account {
     private String residentialAddress;
     private String lineOfBusiness;
     private String businessAddress;
+    private double balance;
     @ManyToOne
     @JoinColumn(name = "customer_id")
             @JsonBackReference

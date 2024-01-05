@@ -11,7 +11,7 @@ public class AccountDto {
     private String name;
 
     @NotBlank(message = "cnic required")
-    @Size(min = 13, message = "invalid cnic")
+    @Size(min = 13, message = "cnic must have 13 digit")
     private String cnic;
 
 //    @Past(message = "Date of birth must be in the past")
@@ -60,29 +60,8 @@ public class AccountDto {
 
     @NotBlank(message = "Business address is required")
     private String businessAddress;
+    private double balance;
 
     private Long customerId;
 
 }
-
-
-    /*
-    private String name;
-    private String cnic;
-    private String dob;
-    private String accountNumber;
-    private String accountType;
-    private String branch;
-    private String bankName;
-    private String city;
-    private String email;
-    private String cellNumber;
-    private String cnicIssuance;
-    private String cnicExpiry;
-    private String purposeOfAccount;
-    private String sourceOfIncome;
-    private String residentialAddress;
-    private String lineOfBusiness;
-    private String businessAddress;
-
-}*/

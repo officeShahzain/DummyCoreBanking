@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CustomerService
 {
-    String addUser(Customer customer);
+    String addUser(CustomerDto customer);
 
     Customer createOTP(CreateOTPDto createOTPDto);
 
@@ -21,7 +21,8 @@ public interface CustomerService
     CustomerDto updateCustomer(CustomerDto customer);
 
     List<Customer> getAllCustomers();
-    Customer getCustomerWithEmail(String email);
-    Customer getCustomerWithCnic(String cnic);
+    CustomerDto getCustomerWithEmail(String email);
+    CustomerDto getCustomerWithCnic(String cnic);
     String login(LoginDto loginDto);
+    CustomerDto getCustomerWithId(Long id);
 }

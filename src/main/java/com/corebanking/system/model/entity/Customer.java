@@ -2,6 +2,7 @@ package com.corebanking.system.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class Customer
     private String firstName;
     private String lastName;
     private String cnic;
+    @NotBlank(message = "email must be required")
     private String email;
     private String userName;
     private String password;

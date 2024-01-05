@@ -38,23 +38,21 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountMapper.dtoToJpe(accountDto);
         account.setAccountNumber(accountNumber);
         boolean checkCnic = isExpired(accountDto.getCnicIssuance(), accountDto.getCnicExpiry());
-
-        if(checkCnic) {
-            Optional<Customer> customer = customerRepository.findByCnicAndEmailAndId(accountDto.getCnic(),accountDto.getEmail(),accountDto.getCustomerId());
-//            .orElseThrow(()-> new ResourceNotFoundException("Customer is not registered"));
-            if(customer.isPresent()) {
+        Optional<Customer> customer = customerRepository.findByCnicAndId(accountDto.getCnic(), accountDto.getCustomerId());
+        if(checkCnic && customer.isPresent()) {
+            //if(customer.isPresent()) {
                 account.setCustomer(customer.get());
                 Account saveAccount = accountRepository.save(account);
                 logger.info("account Number [{}] has been generated against Cnic :  [{}]  ", saveAccount.getAccountNumber(), saveAccount.getCnic());
                 return saveAccount.getAccountNumber() + " " + "save successfully !";
             }
-            else {
-                return "Account Already exist";
-            }
-
+        else if(checkCnic==false) {
+            return "cnic expire";
         }
-
-        return "account is not save";
+        else if(customer.isEmpty()) {
+            return "account is not generated because customer is not save";
+        }
+    return "account is not save";
     }
 
     @Override
@@ -79,21 +77,21 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto getAccountDetail(String accountNumber) {
         Account account = getAccountByAccountNumber(accountNumber);
-        return accountMapper.jpeToDto(account);
+        AccountDto accountDto =  accountMapper.jpeToDto(account);
+        return accountDto;
     }
 
     @Override
     public Boolean accountAvailable(String accountNumber, String cnic) {
         Optional<Account> account = accountRepository.findByAccountNumberAndCnic(accountNumber, cnic);
-        if(account.isPresent())
-        {
-            return true;
-        }
-        return false;
+        throw new ResourceNotFoundException("sssss");
+//        if(account.isPresent()) {
+//            return true;
+//        }
+//        return false;
     }
 
-    private Account updateAccountInfo(AccountDto accountDto)
-   {
+    private Account updateAccountInfo(AccountDto accountDto) {
 
        Account accountDetail = getAccountByAccountNumber(accountDto.getAccountNumber());
        accountDetail.setCity(accountDto.getCity());
@@ -110,8 +108,7 @@ public class AccountServiceImpl implements AccountService {
        Account currentAccountUpdated = accountRepository.save(accountDetail);
        return currentAccountUpdated;
    }
-   private Account getAccountByAccountId(Long accountId)
-   {
+   private Account getAccountByAccountId(Long accountId) {
        Account account = accountRepository.findById(accountId).orElseThrow(()->new ResourceNotFoundException("invalid Id"));
        return account;
    }
