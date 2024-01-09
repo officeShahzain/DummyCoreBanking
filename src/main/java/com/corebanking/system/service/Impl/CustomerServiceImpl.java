@@ -3,7 +3,6 @@ package com.corebanking.system.service.Impl;
 import com.corebanking.system.exception.ResourceNotFoundException;
 import com.corebanking.system.mapper.CustomerMapper;
 import com.corebanking.system.model.dto.AccountDto;
-import com.corebanking.system.model.entity.Account;
 import com.corebanking.system.repository.CustomerRepository;
 import com.corebanking.system.model.dto.CreateOTPDto;
 import com.corebanking.system.model.dto.LoginDto;
@@ -14,9 +13,7 @@ import com.corebanking.system.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +53,9 @@ public class CustomerServiceImpl implements CustomerService
     }
     @Override
     public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
+        Customer customer = getCustomer(id);
+        customerRepository.delete(customer);
+        //customerRepository.deleteById(id);
     }
 
     public Customer save(CustomerDto customer) {
@@ -117,7 +116,7 @@ public class CustomerServiceImpl implements CustomerService
                 return "welcome";
             }
             else {
-                throw new ResourceNotFoundException("invalid email or password");
+                throw new ResourceNotFoundException("Invalid email or password");
             }
         }
         return "invalid email";
@@ -125,7 +124,12 @@ public class CustomerServiceImpl implements CustomerService
 
     @Override
     public CustomerDto getCustomerWithId(Long id) {
-        Customer customer = customerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Customer is not exist"));
+        Customer customer = getCustomer(id);
+        //Customer customer = customerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Customer is not exist"));
         return customerMapper.jpeToDto(customer);
+    }
+    private Customer getCustomer(Long id){
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer is not exist"));
+        return customer;
     }
 }

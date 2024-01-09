@@ -3,8 +3,7 @@ package com.corebanking.system.model.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +12,8 @@ import java.util.List;
 @Table(name = "customer")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer
 {
     @Id

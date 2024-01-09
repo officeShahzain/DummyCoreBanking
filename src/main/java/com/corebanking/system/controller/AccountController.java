@@ -44,5 +44,9 @@ public class AccountController {
     public boolean verifyAccount(@RequestParam("cnic") String cnic, @RequestParam("accountNumber") String accountNumber){
          return accountService.accountAvailable(accountNumber, cnic);
     }
+    @DeleteMapping("/delete/{accoutId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable("accountId")Long accountId) {
+        return new ResponseEntity<>(accountService.deleteAccount(accountId), HttpStatus.OK);
+    }
 
 }

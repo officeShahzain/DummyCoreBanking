@@ -1,7 +1,7 @@
 package com.corebanking.system.controller;
 
 import com.corebanking.system.model.dto.FundsTransferDto;
-import com.corebanking.system.service.FundsTransfer;
+import com.corebanking.system.service.FundsTransferService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,15 +14,21 @@ import java.util.List;
 @RequestMapping("/funds")
 public class FundsTransferController {
     @Autowired
-    FundsTransfer fundsTransfer;
+    FundsTransferService fundsTransferService;
 
     @PostMapping("/transfer")
     public ResponseEntity<String> fundsTransfer(@Valid @RequestBody FundsTransferDto fundsTransferDto) {
-        String response = fundsTransfer.transferFunds(fundsTransferDto);
+        String response = fundsTransferService.transferFunds(fundsTransferDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
         //new ResponseEntity<> (HttpStatus.OK).getBody(response);
     }
+    @GetMapping("/history")
+    public ResponseEntity<?> getSender(@RequestParam ("accountNumber") String senderAccount){
+        List<FundsTransferDto> historyList = fundsTransferService.fundsHistory(senderAccount);
+        if(historyList.isEmpty())
+        {
+            return new ResponseEntity<>("no history of given account",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(historyList,HttpStatus.FOUND);
+    }
 }
-//    @GetMapping("/detail")
-//    public List<FundsTransferDto> getSender(@RequestParam )
-//}

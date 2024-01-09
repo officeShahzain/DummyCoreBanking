@@ -7,6 +7,8 @@ import com.corebanking.system.model.entity.FundsTransfer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface FundsTransferMapper {
     @Mapping(source = "fundsTransfer.senderAccount.id", target = "senderAccount")
@@ -23,5 +25,7 @@ public interface FundsTransferMapper {
     //@Mapping(source = "fundsTransferDto.transferDate", target = "transferDate")
     @Mapping(target = "id", ignore = true) // Ignore the id property
     FundsTransfer FundsTransferToFundsTransferDto(FundsTransferDto fundsTransferDto, Account sender, Account receiver);
+
+    List<FundsTransferDto> listOfFundsDto(List<FundsTransfer> fundsTransfer);
 
 }

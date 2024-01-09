@@ -21,8 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
-public class CustomerController
-{
+public class CustomerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
 
     @Autowired
@@ -38,8 +37,8 @@ public class CustomerController
     {
         return this.customerService.createOTP(createOTPDto);
     }
-    @PostMapping("/login")
-    public ResponseEntity<String> loginPage(@RequestBody LoginDto loginDto)
+    @PostMapping("/login")//NAME CHANGE
+    public ResponseEntity<String> customerLogin(@RequestBody LoginDto loginDto)
     {
          String response =  customerService.login(loginDto);
          return new ResponseEntity<>(response,HttpStatus.FOUND);
@@ -51,7 +50,7 @@ public class CustomerController
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCustomer(@PathVariable("id")Long id){
-        customerService.deleteCustomer(id);
+        customerService.deleteCustomer(id);//TEST AND CHANGE
         return new ResponseEntity<>("Customer id deleted",HttpStatus.OK);
     }
     @GetMapping("/get")

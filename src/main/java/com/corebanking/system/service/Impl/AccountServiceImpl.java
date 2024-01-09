@@ -64,7 +64,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String deleteAccount(Long accountId) {
         Account account = getAccountByAccountId(accountId);
-        accountRepository.deleteById(accountId);
+        accountRepository.delete(account);
+        //accountRepository.deleteById(accountId);
         return "your Account is deleted!";
     }
 
