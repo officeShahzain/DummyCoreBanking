@@ -85,11 +85,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Boolean accountAvailable(String accountNumber, String cnic) {
         Optional<Account> account = accountRepository.findByAccountNumberAndCnic(accountNumber, cnic);
-        throw new ResourceNotFoundException("sssss");
-//        if(account.isPresent()) {
-//            return true;
-//        }
-//        return false;
+ //       throw new ResourceNotFoundException("sssss");
+        if(account.isPresent()) {
+            return true;
+        }
+        return false;
     }
 
     private Account updateAccountInfo(AccountDto accountDto) {
