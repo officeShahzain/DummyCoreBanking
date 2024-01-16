@@ -22,7 +22,7 @@ public class FundsTransferController {
         return new ResponseEntity<>(response, HttpStatus.OK);
         //new ResponseEntity<> (HttpStatus.OK).getBody(response);
     }
-    @GetMapping("/history")
+    @GetMapping("/statement")
     public ResponseEntity<?> getSender(@RequestParam ("accountNumber") String senderAccount){
         List<FundsTransferDto> historyList = fundsTransferService.fundsHistory(senderAccount);
         if(historyList.isEmpty())

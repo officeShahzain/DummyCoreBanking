@@ -5,8 +5,10 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
+
 @Data
-public class AccountDto {
+public class AccountDto implements Serializable {
     @NotBlank(message = "Name is required")
     private String name;
 

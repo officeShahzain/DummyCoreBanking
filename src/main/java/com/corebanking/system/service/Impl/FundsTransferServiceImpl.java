@@ -66,6 +66,7 @@ public class FundsTransferServiceImpl implements FundsTransferService {
         {
            double senderBalance = senderAccount.get().getBalance();
             if (senderBalance >= fundsTransferDto.getTransferAmount()){
+
                 double receiverBalance = receiverAccount.get().getBalance()+fundsTransferDto.getTransferAmount();
                 receiverAccount.get().setBalance(receiverBalance);
 

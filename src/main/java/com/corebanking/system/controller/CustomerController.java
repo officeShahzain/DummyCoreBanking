@@ -8,6 +8,7 @@ import com.corebanking.system.model.dto.LoginDto;
 import com.corebanking.system.model.entity.Customer;
 import com.corebanking.system.service.CustomerService;
 import com.corebanking.system.service.Impl.CustomerServiceImpl;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,19 +28,18 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
     @PostMapping("/signup")
-    public String register(@Valid @RequestBody CustomerDto customer)
-    {
+    public String register(@Valid @RequestBody CustomerDto customer) {
         return this.customerService.addUser(customer);
     }
 
+    @Hidden
     @PostMapping("/createOTP")
-    public Customer createOTP(@RequestBody CreateOTPDto createOTPDto)
-    {
+    public Customer createOTP(@RequestBody CreateOTPDto createOTPDto) {
         return this.customerService.createOTP(createOTPDto);
     }
+    @Hidden
     @PostMapping("/login")//NAME CHANGE
-    public ResponseEntity<String> customerLogin(@RequestBody LoginDto loginDto)
-    {
+    public ResponseEntity<String> customerLogin(@RequestBody LoginDto loginDto) {
          String response =  customerService.login(loginDto);
          return new ResponseEntity<>(response,HttpStatus.FOUND);
     }
