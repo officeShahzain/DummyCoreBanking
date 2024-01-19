@@ -61,11 +61,6 @@ public class CustomerServiceImpl implements CustomerService
     public Customer save(CustomerDto customer) {
         return customerRepository.save(customerMapper.dtoToJpe(customer));
     }
-
-    /*public Customer getCustomerWithEmail(String email,Long Id) {
-        return Optional.ofNullable(this.customerRepository.findByEmailOrId(email,Id)).orElseThrow(() -> new ResourceNotFoundException(String.format("User with email %s not found", email)));
-    }*/
-
     @Override
     public CustomerDto getCustomerWithCnic(String cnic) {
         Customer customer = customerRepository.findByCnic(cnic).orElseThrow(()-> new ResourceNotFoundException("Customer does not exist against Cnic Number : "+cnic));
@@ -125,7 +120,6 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public CustomerDto getCustomerWithId(Long id) {
         Customer customer = getCustomer(id);
-        //Customer customer = customerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Customer is not exist"));
         return customerMapper.jpeToDto(customer);
     }
     private Customer getCustomer(Long id){
